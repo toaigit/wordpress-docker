@@ -1,0 +1,41 @@
+version: '3.8'
+
+networks:
+  default:
+    external:
+      name: proxyNET
+
+services:
+
+  supportdb:
+     image: wpdb
+     command: '--default-authentication-plugin=mysql_native_password'
+     container_name: supportdb
+     ports:
+      - "4306:3306"
+     volumes:
+       - /PATH/data/supportdb:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: WPROOTpassword
+       MYSQL_DATABASE: wpdb
+       MYSQL_USER: wpuser
+       MYSQL_PASSWORD: WPpassword
+
+  supportweb:
+    depends_on:
+       - supportdb
+    image: supportweb
+    container_name: support.resourceonline.org
+    restart: always
+    ports:
+      - "9080:80"
+      - "9443:443"
+    environment:
+       WORDPRESS_DB_HOST: supportdb:3306
+       WORDPRESS_DB_USER: wpuser
+       WORDPRESS_DB_PASSWORD: WPpassword
+       WORDPRESS_DB_NAME: wpdb
+    volumes: 
+       - /PATH/data/supportweb/html:/var/www/html
+       - /PATH/data/supportweb/logs:/var/log

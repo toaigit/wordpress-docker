@@ -1,0 +1,3 @@
+# Depends: setenvif mime socache_shmcb - no change at all - toaivo
+# instead of load mod_ssl, just add this file to the mod-eabled
+LoadModule ssl_module /usr/lib/apache2/modules/mod_ssl.so

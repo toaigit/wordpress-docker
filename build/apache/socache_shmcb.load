@@ -1,0 +1,2 @@
+#  instead of enable the mod_sso, just add this file to mods-enabled
+LoadModule socache_shmcb_module /usr/lib/apache2/modules/mod_socache_shmcb.so

@@ -1,0 +1,8 @@
+FROM wordpress:5.5.1-php7.4
+RUN usermod -u 1000 www-data && \
+    groupmod -g 1000 www-data
+COPY php/custom-php.ini /usr/local/etc/php/conf.d/
+COPY sp-keygen.sh /usr/local/bin
+COPY certs/ /usr/local/apache2/conf
+COPY apache/000-default.conf /etc/apache2/sites-available/
+COPY apache/default-ssl.conf apache/socache_shmcb.load apache/ssl.conf apache/ssl.load /etc/apache2/mods-enabled/
